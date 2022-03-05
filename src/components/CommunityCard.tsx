@@ -1,4 +1,5 @@
 import React from 'react'
+import Styles from './CommunityCard.module.css'
 
 type MentorAnswer = {
   id: number;
@@ -23,25 +24,29 @@ const CommunityCard: React.FC<CommunityCardProps> = ({ contentData }) => {
   const { title, content, answers, isTop, field } = contentData
   
   return (
-    <article>
-      <header>
-        {isTop && <strong>조회수 TOP</strong>}
-        {field && <strong>{field}</strong>}
+    <article className={Styles.container}>
+      <header className={Styles.header}>
+        {isTop && <strong className={`${Styles.tag} ${Styles.tagTop}`}>조회수 TOP</strong>}
+        {field && <strong className={Styles.tag}>{field}</strong>}
       </header>
-      <h1>{title}</h1>
-      <p>{content}</p>
-      <ol>
+      <h1 className={Styles.title}>{title}</h1>
+      <p className={Styles.content}>{content}</p>
+      <ol className={Styles.answerContainer}>
         {
           answers.map(answer => (
-            <li key={answer.id}>
-              <img src="" alt="사진"/>
-              <strong>{answer.mentor}</strong>
-              <p>{answer.content}</p>
+            <li key={answer.id} className={Styles.answerList}>
+              <img className={Styles.mentorImg} src="" alt=""/>
+              <div>
+                <strong className={Styles.mentorId}>{answer.mentor}</strong>
+                <p className={Styles.answerContent}>{answer.content}</p>
+              </div>
             </li>
           ))
         }
       </ol>
-      <button>+더보기</button>
+      <div className={Styles.btnContainer}>
+        <button className={Styles.showMoreBtn}>+더보기</button>
+      </div>
     </article>
   )
 }
