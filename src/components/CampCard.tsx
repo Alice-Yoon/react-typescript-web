@@ -1,4 +1,5 @@
 import React from 'react'
+import Styles from './CampCard.module.css'
 
 type CampData = {
   id: number;
@@ -15,10 +16,10 @@ const CampCard: React.FC<CampCardProps> = ({ contentData }) => {
   const { status, title, startDate } = contentData
 
   return (
-    <article>
-      <strong>{status}</strong>
-      <h1>{title}</h1>
-      <strong>{startDate} 시작</strong>
+    <article className={Styles.container}>
+      <strong className={Styles.strongTag}>{status}</strong>
+      <h1 className={Styles.title}>{title}</h1>
+      <strong className={Styles.strongTag}>{startDate} 시작</strong>
     </article>
   )
 }
