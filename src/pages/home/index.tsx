@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import Styles from './Home.module.css'
+import { Link } from 'react-router-dom'
 
 import CampCard from '../../components/CampCard'
 import CommunityCard from '../../components/CommunityCard'
@@ -37,7 +38,9 @@ const Home = () => {
                 <ul className={Styles.cardList}>
                   {data.camps.map(camp => (
                     <li key={camp.id}>
-                      <CampCard contentData={camp} />
+                      <Link to={`/campDetail/${camp.id}`}>
+                        <CampCard contentData={camp} />
+                      </Link>
                     </li>
                   ))}
                 </ul>
