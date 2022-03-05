@@ -1,10 +1,11 @@
 import React from 'react'
+import Styles from './Navigation.module.css'
 
 const Navigation = () => {
   return (
-    <nav>
-      <h1>Caffein</h1>
-      <a>
+    <nav className={Styles.nav}>
+      <h1 className={Styles.logo}>Caffein</h1>
+      <a className={Styles.icon}>
         Icon
         {/* Icon */}
       </a>

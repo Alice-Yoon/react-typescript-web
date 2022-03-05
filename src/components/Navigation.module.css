@@ -1,0 +1,14 @@
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 24px;
+  color: #fff;
+}
+
+.icon {
+  border: 1px solid green;
+}
