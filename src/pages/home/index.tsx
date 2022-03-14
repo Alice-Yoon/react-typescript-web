@@ -1,5 +1,4 @@
-import React from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import CampCard from '../../components/CampCard'
@@ -7,11 +6,15 @@ import CommunityCard from '../../components/CommunityCard'
 import Footer from '../../components/Footer'
 import Navigation from '../../components/Navigation'
 
+import { useResponsiveContext } from '../../store/responsive'
+
 import homeHeaderImage from '../../assets/images/home_header_image.png'
 
 const Home = () => {
+  const screenSize = useResponsiveContext()
+
   return (
-    <Container>
+    <Container  isMobile={screenSize.isMobile}>
       <header className="header">
         <div className="container">
           <Navigation />
@@ -55,16 +58,19 @@ const Home = () => {
         </div>
 
         {/* 커뮤니티 리스트 */}
-        <section>
-          <h1>커뮤니티</h1>
-          <div className="cardList">
-          { 
-            DUMMY_COMMUNITYDATA && DUMMY_COMMUNITYDATA.map((data => (
-              <CommunityCard key={data.id}  contentData={data} />  
-            )))
-          }
-          </div>
-        </section>
+        {
+          screenSize.isDesktop &&
+          <section className="community-section">
+            <h1>커뮤니티</h1>
+            <div className="cardList">
+            { 
+              DUMMY_COMMUNITYDATA && DUMMY_COMMUNITYDATA.map((data => (
+                <CommunityCard key={data.id}  contentData={data} />  
+              )))
+            }
+            </div>
+          </section>
+        }
       </main>
 
       <Footer />
@@ -74,7 +80,7 @@ const Home = () => {
 
 export default Home
 
-const Container = styled.div`
+const Container = styled.div<{ isMobile: boolean }>`
   .container {
     max-width: 960px;
     height: 100%;
@@ -90,19 +96,43 @@ const Container = styled.div`
 
   .headerContents {
     display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    padding-top: 50px;
+
+    ${(props) => 
+      props.isMobile ?
+        css`
+          flex-direction: column;
+          justify-content: center;
+          padding: 0 10px;
+        `
+      :
+        css`
+          flex-direction: row;
+          align-items: flex-end;
+          justify-content: space-between;
+          padding-top: 50px;
+        `
+    }
   }
 
   .headerTitle {
     font-size: 48px;
     color: #fff;
+    ${(props) => props.isMobile && css`font-size: 40px;`}
   }
 
   .headerImage {
-    width: 600px;
-    height: 400px;
+    ${(props) => 
+      props.isMobile ?
+        css`
+          width: 100%;
+          height: 200px;
+        `
+      :
+        css`
+          width: 600px;
+          height: 400px;
+        `
+    }
   }
 
 
@@ -112,9 +142,23 @@ const Container = styled.div`
 
   .cardList {
     display: flex;
-    gap: 21.5px;
-  }
 
+    ${(props) => 
+      props.isMobile ?
+        css`
+          flex-direction: column;
+          gap: 8px;
+          width: 90%;
+          margin: 0 auto;
+        `
+      :
+        css`
+          flex-direction: row;
+          gap: 21.5px;
+        `
+    }
+    
+  }
 
   .banner {
     background-color: #7471FF;
@@ -122,6 +166,7 @@ const Container = styled.div`
     font-size: 24px;
     color: #fff;
     margin: 89px 0;
+    ${(props) => props.isMobile && css`margin-bottom: 0;`}
   }
 
 `
