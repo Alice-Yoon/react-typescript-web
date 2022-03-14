@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import Styles from './Home.module.css'
+import React from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 import CampCard from '../../components/CampCard'
@@ -11,16 +11,16 @@ import homeHeaderImage from '../../assets/images/home_header_image.png'
 
 const Home = () => {
   return (
-    <>
-      <header className={Styles.header}>
-        <div className={Styles.container}>
+    <Container>
+      <header className="header">
+        <div className="container">
           <Navigation />
-          <div className={Styles.headerContents}>
-            <h2 className={Styles.headerTitle}>
+          <div className="headerContents">
+            <h2 className="headerTitle">
               개발은 <br />카페인과 함께
             </h2>
             <img 
-              className={Styles.headerImage} 
+              className="headerImage"
               src={homeHeaderImage} 
               alt={homeHeaderImage} 
             />
@@ -28,14 +28,14 @@ const Home = () => {
         </div>
       </header>
 
-      <main className={Styles.container}>
+      <main className="container">
         {/* 캠프 리스트 */}
         <section>
           { 
             DUMMY_CAMPDATA && DUMMY_CAMPDATA.map(data => (
               <div key={data.type.value}>
-                <h1 className={Styles.cardListTitle}>{data.type.text}</h1>
-                <ul className={Styles.cardList}>
+                <h1 className="cardListTitle">{data.type.text}</h1>
+                <ul className="cardList">
                   {data.camps.map(camp => (
                     <li key={camp.id}>
                       <Link to={`/campDetail/${camp.id}`}>
@@ -50,14 +50,14 @@ const Home = () => {
         </section>
 
         {/* 배너 */}
-        <div className={Styles.banner}>
+        <div className="banner">
           <p>현직자와 소통하며 배우는 실무 스킬, 퍼스널 트레이닝</p>
         </div>
 
         {/* 커뮤니티 리스트 */}
         <section>
           <h1>커뮤니티</h1>
-          <div className={Styles.cardList}>
+          <div className="cardList">
           { 
             DUMMY_COMMUNITYDATA && DUMMY_COMMUNITYDATA.map((data => (
               <CommunityCard key={data.id}  contentData={data} />  
@@ -68,11 +68,63 @@ const Home = () => {
       </main>
 
       <Footer />
-    </>
+    </Container>
   )
 }
 
 export default Home
+
+const Container = styled.div`
+  .container {
+    max-width: 960px;
+    height: 100%;
+    margin: 0 auto;
+  }
+
+  .header {
+    background: linear-gradient(97.88deg, #854BFF -84.42%, #7179FF 15.02%, #6D83FF 36.89%, #698BFF 54.79%, #6499FF 80.65%, #659BF7 108.49%, #669FEA 148.27%, #69A9CD 197.99%, #6CB1B2 239.75%);
+    width: 100%;
+    padding-bottom: 56px;
+    margin-bottom: 64px;
+  }
+
+  .headerContents {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding-top: 50px;
+  }
+
+  .headerTitle {
+    font-size: 48px;
+    color: #fff;
+  }
+
+  .headerImage {
+    width: 600px;
+    height: 400px;
+  }
+
+
+  .cardListTitle {
+    font-size: 24px;
+  }
+
+  .cardList {
+    display: flex;
+    gap: 21.5px;
+  }
+
+
+  .banner {
+    background-color: #7471FF;
+    padding: 33px 42px;
+    font-size: 24px;
+    color: #fff;
+    margin: 89px 0;
+  }
+
+`
 
 // dummy
 const DUMMY_CAMPDATA = [
