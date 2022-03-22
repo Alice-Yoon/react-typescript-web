@@ -1,17 +1,44 @@
+import { useEffect, useState } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
+
+import { useResponsiveContext } from '../../store/responsive'
+import { Camp, CampType } from '../../types/campType'
+import { Community } from '../../types/communityType'
+
+import { getCampsByType } from '../../apis/campApi'
+import { getCommunities } from '../../apis/communityApi'
 
 import CampCard from '../../components/CampCard'
 import CommunityCard from '../../components/CommunityCard'
 import Footer from '../../components/Footer'
 import Navigation from '../../components/Navigation'
 
-import { useResponsiveContext } from '../../store/responsive'
-
 import homeHeaderImage from '../../assets/images/home_header_image.png'
 
 const Home = () => {
   const screenSize = useResponsiveContext()
+
+  const [popularCamps, setPopularCamps] = useState<Camp[]>([])
+  const [saleCamps, setSaleCamps] = useState<Camp[]>([])
+  const [communities, setCommunities] = useState<Community[]>([])
+
+  useEffect(() => {
+    fetchCamps('popular')
+    fetchCamps('sale')
+    fetchCommunities()
+  }, [])
+
+  const fetchCamps = async (type: CampType) => {
+    const camps = await getCampsByType(type)
+    type === 'popular' ? setPopularCamps(camps) : setSaleCamps(camps)
+  }
+
+  const fetchCommunities = async () => {
+    const communities = await getCommunities()
+    setCommunities(communities)
+  }
+  
 
   return (
     <Container  isMobile={screenSize.isMobile}>
@@ -34,6 +61,20 @@ const Home = () => {
       <main className="container">
         {/* 캠프 리스트 */}
         <section>
+          {/* <h1 className="cardListTitle">인기 부트캠프</h1>
+          <div>
+            <ul className="cardList">
+              {
+                popularCamps && popularCamps.map(camp => (
+                  <li key={camp.id}>
+                    <Link to={`/campDetail/${camp.id}`}>
+                      <CampCard contentData={camp} />
+                    </Link>
+                  </li>
+                ))
+              }
+            </ul>
+          </div> */}
           { 
             DUMMY_CAMPDATA && DUMMY_CAMPDATA.map(data => (
               <div key={data.type.value}>
@@ -63,6 +104,11 @@ const Home = () => {
           <section className="community-section">
             <h1>커뮤니티</h1>
             <div className="cardList">
+            {/* { 
+              communities && communities.map((data => (
+                <CommunityCard key={data.id}  contentData={data} />  
+              )))
+            } */}
             { 
               DUMMY_COMMUNITYDATA && DUMMY_COMMUNITYDATA.map((data => (
                 <CommunityCard key={data.id}  contentData={data} />  
